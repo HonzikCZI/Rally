@@ -30,7 +30,7 @@ black = (0, 0, 0)
 
 # fonty
 big_font = pygame.font.Font("fonts/Emulogic.ttf", 50)
-#middle_font = pygame.font.Font("font/Emulogic.ttf", 30)
+midle_font = pygame.font.Font("fonts/Emulogic.ttf", 30)
 
 # obrazky
 background_image = pygame.image.load("img/silnice.png")
@@ -44,8 +44,13 @@ car_image_rect = car_image.get_rect()
 car_image_rect.center = (screen_width//2, screen_height//2)
 
 # texty
-#score_text = middle_font.render(f"score: {score}",True, black)
-#score_text_rect = score_text.get_rect()
+score_text = midle_font.render(f"score:{score}",True, black)
+score_text_rect = score_text.get_rect()
+score_text_rect.topright = (screen_width - 30, 10)
+
+lives_text = midle_font.render(f"zivoty:{player_start_lives}", True, black)
+lives_text_rect = lives_text.get_rect()
+lives_text_rect.center = (screen_width - 1100, 30)
 
 
 # hlavni cyklus
@@ -58,6 +63,10 @@ while lets_continue:
     # obrazky
     screen.blit(background_image, background_image_rect)
     screen.blit(car_image, car_image_rect)
+    
+    # Texty 
+    screen.blit(score_text, score_text_rect)
+    screen.blit(lives_text, lives_text_rect)
             
     # update obrazovky
     pygame.display.update()
