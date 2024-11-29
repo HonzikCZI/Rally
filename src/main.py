@@ -1,7 +1,7 @@
 import pygame
 import random
 
-# inicializace hry
+# inicializace hry TEST
 pygame.init()
 
 # obrazovka
