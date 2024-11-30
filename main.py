@@ -64,16 +64,45 @@ continue_text_rect.center = (screen_width//2, screen_height//2 + 50)
 success_click = pygame.mixer.Sound("music/wruum.mp3")
 miss_click = pygame.mixer.Sound("music/horn.mp3")
 pygame.mixer.music.load("music/background.mp3")
-success_click.set_volume(0.2)
-miss_click.set_volume(0.2)
+success_click.set_volume(0.4)
+miss_click.set_volume(0.4)
 
 # hlavni cyklus
 lets_continue = True
 pygame.mixer.music.play(-1, 0.0)
-while lets_continue:
+while lets_continue:   
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            lets_continue = False        
+            lets_continue = False  
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            click_x = event.pos[0]
+            click_y = event.pos[1] 
+
+            # Bylo kliknuto na auto 
+            if car_image_rect.collidepoint(click_x, click_y):
+                success_click.play()
+                score += 1
+                car_speed += car_speed_acceleration
+                previous_x = car_x
+                previous_y = car_y
+
+                while previous_x == car_x and previous_y == car_y:
+                    car_x = random.choice([-1, 1])
+                    car_y = random.choice([-1, 1])    
+            else:
+                miss_click.play() 
+                player_lives -= 1   
+
+    # odraz auta
+    if car_image_rect.left < 0 or car_image_rect.right >= screen_width:
+        car_x = -1 * car_x    
+    if car_image_rect.top < 0 or car_image_rect.bottom >= screen_height:    
+        car_y = -1 * car_y
+
+    # Pohyb auta
+    car_image_rect.x += car_x * car_speed
+    car_image_rect.y += car_y * car_speed
     
     # obrazky
     screen.blit(background_image, background_image_rect)
