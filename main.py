@@ -1,7 +1,7 @@
 import pygame
 import random
 
-# inicializace hry TEST
+# inicializace hry
 pygame.init()
 
 # obrazovka
@@ -52,9 +52,24 @@ lives_text = midle_font.render(f"zivoty:{player_start_lives}", True, black)
 lives_text_rect = lives_text.get_rect()
 lives_text_rect.center = (screen_width - 1100, 30)
 
+game_over_text = big_font.render("Hra skoncila", True, black)
+game_over_text_rect = game_over_text.get_rect()
+game_over_text_rect.center = (screen_width//2, screen_height//2)
+
+continue_text = midle_font.render("Klikni pro pokracovani", True, black)
+continue_text_rect = continue_text.get_rect()
+continue_text_rect.center = (screen_width//2, screen_height//2 + 50)
+
+# zvuky
+success_click = pygame.mixer.Sound("music/wruum.mp3")
+miss_click = pygame.mixer.Sound("music/horn.mp3")
+pygame.mixer.music.load("music/background.mp3")
+success_click.set_volume(0.2)
+miss_click.set_volume(0.2)
 
 # hlavni cyklus
 lets_continue = True
+pygame.mixer.music.play(-1, 0.0)
 while lets_continue:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
