@@ -17,7 +17,7 @@ player_start_lives = 5
 car_start_speed = 2
 car_speed_acceleration = 0.1
 speed = 0
-score = 49
+score = 0
 
 player_lives = player_start_lives
 car_speed = car_start_speed
