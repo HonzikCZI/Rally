@@ -15,7 +15,7 @@ fps = 60
 clock = pygame.time.Clock()
 player_start_lives = 5
 car_start_speed = 2
-car_speed_acceleration = 0.5
+car_speed_acceleration = 0.1
 speed = 0
 score = 0
 
