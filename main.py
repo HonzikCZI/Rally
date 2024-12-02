@@ -11,13 +11,13 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("RALLY")
 
 # nastaveni hry
-fps = 60
+fps = 120
 clock = pygame.time.Clock()
 player_start_lives = 5
 car_start_speed = 2
 car_speed_acceleration = 0.1
 speed = 0
-score = 0
+score = 49
 
 player_lives = player_start_lives
 car_speed = car_start_speed
@@ -43,6 +43,11 @@ car_image = pygame.transform.scale(car_image, (300,100))
 car_image_rect = car_image.get_rect()
 car_image_rect.center = (screen_width//2, screen_height//2)
 
+cup_image = pygame.image.load("img/cup.png")
+cup_image = pygame.transform.scale(cup_image, (128,128))
+cup_image_rect = car_image.get_rect()
+cup_image_rect.center = (screen_width//2 + 60, screen_height//2 - 110)
+
 # texty
 score_text = midle_font.render(f"score:{score}",True, black)
 score_text_rect = score_text.get_rect()
@@ -59,6 +64,10 @@ game_over_text_rect.center = (screen_width//2, screen_height//2)
 continue_text = midle_font.render("Klikni pro pokracovani", True, black)
 continue_text_rect = continue_text.get_rect()
 continue_text_rect.center = (screen_width//2, screen_height//2 + 50)
+
+win_text = big_font.render("vyhral si !!!", True, black)
+win_text_rect = win_text.get_rect()
+win_text_rect.center = (screen_width//2, screen_height//2)
 
 # zvuky
 success_click = pygame.mixer.Sound("music/wruum.mp3")
@@ -130,6 +139,13 @@ while lets_continue:
         screen.blit(game_over_text, game_over_text_rect)
         screen.blit(continue_text, continue_text_rect)
         pygame.display.update()
+
+    # pojhár
+    if score == 50:
+        screen.blit(cup_image, cup_image_rect)
+        screen.blit(win_text, win_text_rect)
+        pygame.display.update()
+
 
     # pozastavi hru
         pygame.mixer.music.stop() 
