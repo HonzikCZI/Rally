@@ -64,6 +64,7 @@ continue_text_rect.center = (screen_width//2, screen_height//2 + 50)
 success_click = pygame.mixer.Sound("music/wruum.mp3")
 miss_click = pygame.mixer.Sound("music/horn.mp3")
 pygame.mixer.music.load("music/background.mp3")
+pygame.mixer.music.set_volume(1.0)
 success_click.set_volume(0.4)
 miss_click.set_volume(0.4)
 
@@ -100,6 +101,7 @@ while lets_continue:
     if car_image_rect.top < 0 or car_image_rect.bottom >= screen_height:    
         car_y = -1 * car_y
 
+
     # Pohyb auta
     car_image_rect.x += car_x * car_speed
     car_image_rect.y += car_y * car_speed
@@ -111,12 +113,42 @@ while lets_continue:
     # Texty 
     screen.blit(score_text, score_text_rect)
     screen.blit(lives_text, lives_text_rect)
+
+    # update životy a skóre
+    score_text = midle_font.render(f"score:{score}",True, black)
+    lives_text = midle_font.render(f"zivoty:{player_lives}", True, black)
+
             
     # update obrazovky
     pygame.display.update()
     
     # zpomaleni cyklu
     clock.tick(fps)
+
+    # kontrola konce hry
+    if player_lives == 0:
+        screen.blit(game_over_text, game_over_text_rect)
+        screen.blit(continue_text, continue_text_rect)
+        pygame.display.update()
+
+    # pozastavi hru
+        pygame.mixer.music.stop() 
+        pause = True
+        while pause:
+            # chce hrát znova
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    score = 0
+                    player_lives = player_start_lives
+                    car_speed = car_start_speed
+                    car_image_rect.center = (screen_width//2, screen_height//2)
+                    pause = False
+                    car_x = random.choice([-1, 1])
+                    car_y = random.choice([-1, 1])
+                    pygame.mixer.music.play(-1, 0.0)
+                elif event.type == pygame.QUIT:
+                    pause = False
+                    lets_continue = False
 
 # ukonceni hry
 pygame.quit
